@@ -10,11 +10,11 @@ import UIKit
 
 class WaveView: UIView, UIGestureRecognizerDelegate, CAAnimationDelegate {
 
-    var didEndPull: (()->())?
+    @objc var didEndPull: (()->())?
     var bounceDuration:CFTimeInterval!
-    var waveLayer:CAShapeLayer!
+    @objc var waveLayer:CAShapeLayer!
 
-    init(frame:CGRect, bounceDuration:CFTimeInterval = 0.4, color:UIColor = UIColor.white) {
+    @objc init(frame:CGRect, bounceDuration:CFTimeInterval = 0.4, color:UIColor = UIColor.white) {
         self.bounceDuration = bounceDuration
         super.init(frame:frame)
 
@@ -30,16 +30,16 @@ class WaveView: UIView, UIGestureRecognizerDelegate, CAAnimationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func wave(_ y:CGFloat) {
+    @objc func wave(_ y:CGFloat) {
         self.waveLayer.path = self.wavePath(amountX: 0, amountY: y)
     }
     
-    func didRelease(amountX: CGFloat,amountY: CGFloat) {
+    @objc func didRelease(amountX: CGFloat,amountY: CGFloat) {
         self.boundAnimation(positionX: amountX, positionY: amountY)
         didEndPull?()
     }
     
-    func boundAnimation(positionX: CGFloat,positionY: CGFloat) {
+    @objc func boundAnimation(positionX: CGFloat,positionY: CGFloat) {
         self.waveLayer.path = self.wavePath(amountX: 0, amountY: 0)
         let bounce = CAKeyframeAnimation(keyPath: "path")
         bounce.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
@@ -59,7 +59,7 @@ class WaveView: UIView, UIGestureRecognizerDelegate, CAAnimationDelegate {
         self.waveLayer.add(bounce, forKey: "return")
     }
     
-    func wavePath(amountX:CGFloat, amountY:CGFloat) -> CGPath {
+    @objc func wavePath(amountX:CGFloat, amountY:CGFloat) -> CGPath {
         let w = self.frame.width
         let h = self.frame.height
         let centerY:CGFloat = 0

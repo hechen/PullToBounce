@@ -10,10 +10,10 @@ import UIKit
 
 class BounceView: UIView {
     
-    let ballView : BallView!
-    let waveView : WaveView!
+    @objc let ballView : BallView!
+    @objc let waveView : WaveView!
     
-    init(
+    @objc init(
         frame:CGRect,
         bounceDuration: CFTimeInterval = 0.8,
         ballSize:CGFloat = 28,//32,
@@ -60,7 +60,7 @@ class BounceView: UIView {
         }
     }
     
-    func endingAnimation(_ complition:(()->())? = nil) {
+    @objc func endingAnimation(_ complition:(()->())? = nil) {
         ballView.endAnimation {
             self.ballView.isHidden = true
             complition?()
@@ -71,11 +71,11 @@ class BounceView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func wave(_ y: CGFloat) {
+    @objc func wave(_ y: CGFloat) {
         waveView.wave(y)
     }
     
-    func didRelease(_ y: CGFloat) {
+    @objc func didRelease(_ y: CGFloat) {
         waveView.didRelease(amountX: 0, amountY: y)
     }
 }

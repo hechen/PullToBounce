@@ -26,25 +26,25 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PullToBounceWrapper: UIView {
 
-    var pullDist: CGFloat = 80
-    var bendDist: CGFloat = 40
-    var stopPos:CGFloat {
+    @objc var pullDist: CGFloat = 80
+    @objc var bendDist: CGFloat = 40
+    @objc var stopPos:CGFloat {
         get {
             return pullDist + bendDist
         }
     }
 
-    open var didPullToRefresh: (()->())?
+    @objc open var didPullToRefresh: (()->())?
     
-    var bounceView: BounceView!
-    open var scrollView: UIScrollView?
+    @objc var bounceView: BounceView!
+    @objc open var scrollView: UIScrollView?
 
     /**
     Please addSubView this insted of your scrollView.
     The only required parameter is scrollView.
     And you can customize animation by other parameters.
     */
-    public init(
+    @objc public init(
         scrollView: UIScrollView,
         bounceDuration: CFTimeInterval = 0.8,
         ballSize:CGFloat = 36,
@@ -92,7 +92,7 @@ open class PullToBounceWrapper: UIView {
         scrollView?.removeObserver(self, forKeyPath: contentOffsetKeyPath, context: &KVOContext)
     }
     
-    func scrollViewDidScroll() {
+    @objc func scrollViewDidScroll() {
         if scrollView?.contentOffset.y < 0 {
             let y = scrollView!.contentOffset.y * -1
             if y < pullDist {
@@ -119,7 +119,7 @@ open class PullToBounceWrapper: UIView {
         }
     }
     
-    open func stopLoadingAnimation() {
+    @objc open func stopLoadingAnimation() {
         bounceView.endingAnimation {
             self.scrollView?.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             self.scrollView?.isScrollEnabled = true

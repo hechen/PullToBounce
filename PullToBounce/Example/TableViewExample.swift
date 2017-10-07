@@ -33,7 +33,7 @@ class TableViewExample: UIViewController {
         makeMock()
     }
 
-    func makeMock() {
+    @objc func makeMock() {
         let headerView = UIView()
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 64)
         headerView.backgroundColor = UIColor.lightBlue

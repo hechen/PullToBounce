@@ -13,9 +13,9 @@ private var upDuration: Double!
 
 class BallView: UIView {
     
-    var circleLayer: CircleLayer!
+    @objc var circleLayer: CircleLayer!
     
-    init(frame:CGRect,
+    @objc init(frame:CGRect,
         circleSize:CGFloat = 40,
         timingFunc:CAMediaTimingFunction = timeFunc,
         moveUpDuration:CFTimeInterval = upDuration,
@@ -44,10 +44,10 @@ class BallView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func startAnimation() {
+    @objc func startAnimation() {
         circleLayer.startAnimation()
     }
-    func endAnimation(_ complition:(()->())? = nil) {
+    @objc func endAnimation(_ complition:(()->())? = nil) {
         circleLayer.endAnimation(complition)
     }
 }
@@ -58,10 +58,10 @@ class BallView: UIView {
 class CircleLayer :CAShapeLayer, CAAnimationDelegate {
     
     let moveUpDist: CGFloat!
-    let spiner: SpinerLayer!
-    var didEndAnimation: (()->())?
+    @objc let spiner: SpinerLayer!
+    @objc var didEndAnimation: (()->())?
     
-    init(size:CGFloat, moveUpDist:CGFloat , superViewFrame:CGRect, color:UIColor = UIColor.white) {
+    @objc init(size:CGFloat, moveUpDist:CGFloat , superViewFrame:CGRect, color:UIColor = UIColor.white) {
         self.moveUpDist = moveUpDist
         let selfFrame = CGRect(x: 0, y: 0, width: superViewFrame.size.width, height: superViewFrame.size.height)
         self.spiner = SpinerLayer(superLayerFrame: selfFrame, ballSize: size, color: color)
@@ -86,19 +86,19 @@ class CircleLayer :CAShapeLayer, CAAnimationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func startAnimation() {
+    @objc func startAnimation() {
         self.moveUp(moveUpDist)
         Timer.schedule(delay: upDuration) { timer in
             self.spiner.animation()
         }
     }
-    func endAnimation(_ complition:(()->())? = nil) {
+    @objc func endAnimation(_ complition:(()->())? = nil) {
         spiner.stopAnimation()
         self.moveDown(moveUpDist)
         didEndAnimation = complition
     }
     
-    func moveUp(_ distance: CGFloat) {
+    @objc func moveUp(_ distance: CGFloat) {
         let move = CABasicAnimation(keyPath: "position")
         
         move.fromValue = NSValue(cgPoint: position)
@@ -113,7 +113,7 @@ class CircleLayer :CAShapeLayer, CAAnimationDelegate {
     }
     
     
-    func moveDown(_ distance: CGFloat) {
+    @objc func moveDown(_ distance: CGFloat) {
         let move = CABasicAnimation(keyPath: "position")
         
         move.fromValue = NSValue(cgPoint: CGPoint(x: position.x, y: position.y - distance))
@@ -136,7 +136,7 @@ class CircleLayer :CAShapeLayer, CAAnimationDelegate {
 
 class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
     
-    init(superLayerFrame:CGRect, ballSize:CGFloat, color:UIColor = UIColor.white) {
+    @objc init(superLayerFrame:CGRect, ballSize:CGFloat, color:UIColor = UIColor.white) {
         super.init()
         
         let radius:CGFloat = (ballSize / 2) * 1.2//1.45
@@ -162,7 +162,7 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func animation() {
+    @objc func animation() {
         self.isHidden = false
         let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
         rotate.fromValue = 0
@@ -177,7 +177,7 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         strokeEndAnimation()
     }
 
-    func strokeEndAnimation() {
+    @objc func strokeEndAnimation() {
         let endPoint = CABasicAnimation(keyPath: "strokeEnd")
         endPoint.fromValue = 0
         endPoint.toValue = 1.0
@@ -190,7 +190,7 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         self.add(endPoint, forKey: endPoint.keyPath)
     }
     
-    func strokeStartAnimation() {
+    @objc func strokeStartAnimation() {
         let startPoint = CABasicAnimation(keyPath: "strokeStart")
         startPoint.fromValue = 0
         startPoint.toValue = 1.0
@@ -215,7 +215,7 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         }
     }
     
-    func stopAnimation() {
+    @objc func stopAnimation() {
         self.isHidden = true
         self.removeAllAnimations()
     }

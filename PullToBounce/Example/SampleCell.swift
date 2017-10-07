@@ -10,7 +10,7 @@ import UIKit
 
 class SampleCell: UITableViewCell {
     
-    let color = UIColor.lightBlue
+    @objc let color = UIColor.lightBlue
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -42,7 +42,7 @@ class SampleCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func addLine(_ frame:CGRect) {
+    @objc func addLine(_ frame:CGRect) {
         let line = UIView(frame:frame)
         line.layer.cornerRadius = frame.height / 2
         line.backgroundColor = color
